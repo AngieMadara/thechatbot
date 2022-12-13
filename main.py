@@ -1,20 +1,24 @@
-from flask import Flask, request, session
+from flask import Flask, request, session, Response
 from twilio.twiml.messaging_response import MessagingResponse
-from jabebot import ask, append_interaction_to_chat_log
+from bot import ask, append_interaction_to_chat_log
 
 app = Flask(__name__)
 # if for some reason your conversation with the bot gets weird, change the secret key 
-app.config['SECRET_KEY'] = '89djhff9lhkd93'
+app.config['SECRET_KEY'] = '8wLs1T3BlbkFJUJ5BxArOjUcAMX7njo78'
 
-@app.route('/jabebot', methods=['POST'])
-def jabe():
+@app.route('/bot', methods=['POST'])
+def bot():
     incoming_msg = request.values['Body']
+    print(incoming_msg)
     chat_log = session.get('chat_log')
     answer = ask(incoming_msg, chat_log)
     session['chat_log'] = append_interaction_to_chat_log(incoming_msg, answer,
                                                          chat_log)
     msg = MessagingResponse()
     msg.message(answer)
+    print(answer)
+    print(msg)
+   
     return str(msg)
 
 if __name__ == '__main__':
