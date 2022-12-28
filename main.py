@@ -1,30 +1,30 @@
 from flask import Flask, request, session, Response
 from twilio.twiml.messaging_response import MessagingResponse
 from bot import ask, append_interaction_to_chat_log
-import sqlite3
+# import sqlite3
 
 app = Flask(__name__)
 # if for some reason your conversation with the bot gets weird, change the secret key 
 app.config['SECRET_KEY'] = '8wLs1T3BlbkFJUJ5BxArOjUcAMX7njo78'
 
 
-def get_memory(conversation_id):
-  connection = sqlite3.connect("memory.db")
-  cursor = connection.cursor()
-  cursor.execute(f"SELECT * FROM conversations WHERE conversation_id='{conversation_id}'")
-  result = cursor.fetchone()
-  connection.close()
-  if result:
-    return result[1]
-  else:
-    return ""
+# def get_memory(conversation_id):
+#   connection = sqlite3.connect("memory.db")
+#   cursor = connection.cursor()
+#   cursor.execute(f"SELECT * FROM conversations WHERE conversation_id='{conversation_id}'")
+#   result = cursor.fetchone()
+#   connection.close()
+#   if result:
+#     return result[1]
+#   else:
+#     return ""
 
-def add_to_memory(conversation_id, message):
-  connection = sqlite3.connect("memory.db")
-  cursor = connection.cursor()
-  cursor.execute(f"INSERT INTO conversations VALUES ('{conversation_id}', '{message}')")
-  connection.commit()
-  connection.close()
+# def add_to_memory(conversation_id, message):
+#   connection = sqlite3.connect("memory.db")
+#   cursor = connection.cursor()
+#   cursor.execute(f"INSERT INTO conversations VALUES ('{conversation_id}', '{message}')")
+#   connection.commit()
+#   connection.close()
 
 
 @app.route('/bot', methods=['POST'])
@@ -51,18 +51,6 @@ def bot():
    
     return str(msg)
 
-from twilio.twiml.messaging_response import MessagingResponse
-
-@app.route("/sms", methods=["POST"])
-def sms():
-  # Retrieve the user's phone number and message
-  phone_number = request.form["From"]
-  message = request.form["Body"]
-
-  # Generate a response
-  response_message = chat({"conversation_id": phone_number, "message": message})
-
-  # Create a
 
 
 if __name__ == '__main__':
