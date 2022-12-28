@@ -30,7 +30,7 @@ def add_to_memory(conversation_id, message):
 @app.route('/bot', methods=['POST'])
 def bot():
     incoming_msg = request.values['Body']
-    conversation_id = request.values["conversation_id"]
+    conversation_id = request.values["from"]
     print(incoming_msg)
 
     # chat_log = session.get('chat_log')
