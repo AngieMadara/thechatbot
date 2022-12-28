@@ -30,7 +30,7 @@ def add_to_memory(conversation_id, message):
 @app.route('/bot', methods=['POST'])
 def bot():
     incoming_msg = request.values['Body']
-    conversation_id = request.values["from"]
+    conversation_id = request.values["From"]
     print(incoming_msg)
 
     # chat_log = session.get('chat_log')
@@ -50,6 +50,20 @@ def bot():
     print(msg)
    
     return str(msg)
+
+from twilio.twiml.messaging_response import MessagingResponse
+
+@app.route("/sms", methods=["POST"])
+def sms():
+  # Retrieve the user's phone number and message
+  phone_number = request.form["From"]
+  message = request.form["Body"]
+
+  # Generate a response
+  response_message = chat({"conversation_id": phone_number, "message": message})
+
+  # Create a
+
 
 if __name__ == '__main__':
     app.run(debug=True)
