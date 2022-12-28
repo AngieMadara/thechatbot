@@ -33,17 +33,20 @@ def bot():
     conversation_id = request.values["conversation_id"]
     print(incoming_msg)
 
+    # chat_log = session.get('chat_log')
+    # answer = ask(incoming_msg, chat_log)
+    
     memory = get_memory(conversation_id)
-    add_to_memory(conversation_id, message)
-    chat_log = session.get('chat_log')
-    answer = ask(incoming_msg, chat_log)
-    add_to_memory(conversation_id, answer)
+    add_to_memory(conversation_id, incoming_msg)
+    prompt = f"{memory}\n{incoming_msg}"
+    response = ask(prompt)
+    add_to_memory(conversation_id, response)
 
     session['chat_log'] = append_interaction_to_chat_log(incoming_msg, answer,
                                                          chat_log)
-    msg = MessagingResponse()
-    msg.message(answer)
-    print(answer)
+    msg = MessagingResponse(response)
+    msg.message(response)
+    print(response)
     print(msg)
    
     return str(msg)
