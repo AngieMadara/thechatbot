@@ -5,13 +5,13 @@ import os
 import openai
 
 load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
-# openai.api_key = "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"
+# openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = "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"
 completion = openai.Completion()
 
 start_sequence = "\nBot:"
 restart_sequence = "\n\nPerson:"
-session_prompt = "You are talking to Bot, GPT3 bot. \n\nPerson:"
+session_prompt = "You are talking to tupidSmart!, GPT3 bot. \n\nPerson:"
 
 def ask(question, chat_log=None):
     prompt_text = f'{chat_log}{restart_sequence}: {question}{start_sequence}:'

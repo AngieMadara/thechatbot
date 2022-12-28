@@ -30,16 +30,16 @@ def add_to_memory(conversation_id, message):
 @app.route('/bot', methods=['POST'])
 def bot():
     incoming_msg = request.values['Body']
-    conversation_id = request.values["From"]
+    # conversation_id = request.values["From"]
     print(incoming_msg)
 
-    # chat_log = session.get('chat_log')
+    chat_log = session.get('chat_log')
     # answer = ask(incoming_msg, chat_log)
     
-    memory = get_memory(conversation_id)
-    add_to_memory(conversation_id, incoming_msg)
+    # memory = get_memory(conversation_id)
+    # add_to_memory(conversation_id, incoming_msg)
     prompt = f"{memory}\n{incoming_msg}"
-    response = ask(prompt)
+    response = ask(prompt, chat_log)
     add_to_memory(conversation_id, response)
 
     session['chat_log'] = append_interaction_to_chat_log(incoming_msg, answer,
