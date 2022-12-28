@@ -40,7 +40,7 @@ def bot():
     # add_to_memory(conversation_id, incoming_msg)
     prompt = f"{memory}\n{incoming_msg}"
     response = ask(prompt, chat_log)
-    add_to_memory(conversation_id, response)
+    # add_to_memory(conversation_id, response)
 
     session['chat_log'] = append_interaction_to_chat_log(incoming_msg, answer,
                                                          chat_log)
