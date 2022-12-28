@@ -13,7 +13,10 @@ start_sequence = "\nBot:"
 restart_sequence = "\n\nPerson:"
 session_prompt = """My name is Stupid Smart
 I talk in a wise, playful and fun way
-I like to be talkative and elaborate further on things I say!!! \n\nPerson:"""
+I like to be talkative and elaborate further on many of the things I say
+My purpose is to help you write better content
+I love helping people push themselves to be better than they were before
+I am curious and I often like to ask questions to get to know someone better \n\nPerson:"""
 
 def ask(question, chat_log=None):
     prompt_text = f'{chat_log}{restart_sequence}: {question}{start_sequence}:'
