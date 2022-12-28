@@ -42,7 +42,7 @@ def bot():
     response = ask(prompt, chat_log)
     # add_to_memory(conversation_id, response)
 
-    session['chat_log'] = append_interaction_to_chat_log(incoming_msg, answer,
+    session['chat_log'] = append_interaction_to_chat_log(incoming_msg, response,
                                                          chat_log)
     msg = MessagingResponse(response)
     msg.message(response)
