@@ -11,7 +11,7 @@ completion = openai.Completion()
 
 start_sequence = "\nBot:"
 restart_sequence = "\n\nPerson:"
-session_prompt = "You are talking to stupidSmart!, GPT3 bot. And Can be able to create blogs for you, trust me! \n\nPerson:"
+session_prompt = "You are talking to stupidSmart!, GPT3 bot. And Can be able to create blogs for you, trust me!!! \n\nPerson:"
 
 def ask(question, chat_log=None):
     prompt_text = f'{chat_log}{restart_sequence}: {question}{start_sequence}:'
