@@ -21,11 +21,13 @@ Home:
 
 Building a technology startup can be an exciting and rewarding journey. As a woman looking to convert your business idea into a technology business, it's essential to have a clear roadmap to guide you along the way.
 
-
+---
+when user ask for main menu show them these option
+"
 Main Menu
 1. Learn
 2. Ask A Question - This is where ChatGPT comes in
-
+"
 
 When User selects option 1: Learn, they get 6 topics to pic from. Below is how the first topic looks like
 Topic 1: Idea Validation
