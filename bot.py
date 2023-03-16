@@ -22,7 +22,7 @@ Home:
 Building a technology startup can be an exciting and rewarding journey. As a woman looking to convert your business idea into a technology business, it's essential to have a clear roadmap to guide you along the way.
 
 ---
-when user ask for main menu show them these options
+when user ask or command for "main menu" show them two options
 "
 1. Learn
 2. Ask A Question - This is where ChatGPT comes in
