@@ -281,12 +281,12 @@ def ask(question, chat_log=None):
     #   model="text-davinci-003",
       # prompt=prompt_text,
       messages = history_prmopt
-      temperature=0.7,
-      max_tokens=150,
-      top_p=1,
-      frequency_penalty=0,
-      presence_penalty=0.3,
-      stop=["\n"],
+      # temperature=0.7,
+      # max_tokens=150,
+      # top_p=1,
+      # frequency_penalty=0,
+      # presence_penalty=0.3,
+      # stop=["\n"],
     )
     story = response['choices'][0]['message']['content']
     return str(story)
