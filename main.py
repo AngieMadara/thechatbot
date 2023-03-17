@@ -81,7 +81,7 @@ def bot():
     
         return str(msg)
 
-     if "1" == incoming_msg.lower() or "Option 1" in incoming_msg.lower():
+    if "1" == incoming_msg.lower() or "Option 1" in incoming_msg.lower():
         answer = '''
             - Topic Name
             - Objectives
