@@ -12,6 +12,19 @@ app.config['SECRET_KEY'] = '8wLs1T3BlbkFJUJ5BxAcvjbvkjgffvrOjUcAMX7njo78'
 def bot():
     incoming_msg = request.values['Body']
     
+    if "menu" in incoming_msg:
+        answer = '''
+            Welcome, Athenabot is here to help 1 million women entrepreneurs start and grow their technology businesses! Whether you're just starting out or looking to take your business to the next level, we've got you covered \n
+            1 - Learn
+            2 - Ask a question
+        '''
+        msg = MessagingResponse()
+        msg.message(answer)
+        print(answer)
+        print(msg)
+    
+        return str(msg)
+    
     chat_log = session.get('chat_log')
     answer = ask(incoming_msg, chat_log)
     session['chat_log'] = append_interaction_to_chat_log(incoming_msg, answer,
