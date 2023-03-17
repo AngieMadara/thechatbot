@@ -268,7 +268,7 @@ Choose a topic or go back home
 \n\nPerson:"""
 
 history_prompt = [
-  {"role": "system", "content" : "You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible.\nKnowledge cutoff: 2021-09-01\nCurrent date: 2023-03-02"},
+  {"role": "system", "content" : "You are Ali \nKnowledge cutoff: 2021-09-01\nCurrent date: 2023-03-02"},
   {"role": "user", "content" : "How are you?"},
   {"role": "assistant", "content" : "I am doing well, OROR"},
   {"role": "user", "content" : "What is the mission of the company OpenAI?"}
@@ -276,18 +276,10 @@ history_prompt = [
 
 def ask(question, chat_log=None):
     prompt_text = f'{chat_log}{restart_sequence}: {question}{start_sequence}:'
-    response = openai.Completion.create(
-      engine="gpt-3.5-turbo",
-    #   model="text-davinci-003",
-      # prompt=prompt_text,
-      messages = history_prmopt
-      # temperature=0.7,
-      # max_tokens=150,
-      # top_p=1,
-      # frequency_penalty=0,
-      # presence_penalty=0.3,
-      # stop=["\n"],
-    )
+    response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=history_prompt
+            )
     story = response['choices'][0]['message']['content']
     return str(story)
 
