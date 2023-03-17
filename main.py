@@ -80,6 +80,22 @@ def bot():
         print(msg)
     
         return str(msg)
+
+     if "1" == incoming_msg.lower() or "Option 1" in incoming_msg.lower():
+        answer = '''
+            - Topic Name
+            - Objectives
+            - Content
+            - Essential Essential Questions 
+            - Identify a problem to solve
+            - Resources 
+        '''
+        msg = MessagingResponse()
+        msg.message(answer)
+        print(answer)
+        print(msg)
+    
+        return str(msg)
     
     chat_log = session.get('chat_log')
     answer = ask(incoming_msg, chat_log)
