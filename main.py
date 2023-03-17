@@ -67,12 +67,12 @@ def bot():
     
     if "topic sequence" == incoming_msg.lower() or "what is topic sequence" == incoming_msg.lower():
         answer = '''
-            - Topic Name
-            - Objectives
-            - Content
-            - Essential Essential Questions 
-            - Identify a problem to solve
-            - Resources 
+            - Topic Name \n
+            - Objectives \n
+            - Content \n
+            - Essential Essential Questions \n
+            - Identify a problem to solve\n
+            - Resources \n
         '''
         msg = MessagingResponse()
         msg.message(answer)
@@ -83,12 +83,13 @@ def bot():
 
     if "1" == incoming_msg.lower() or "Option 1" in incoming_msg.lower():
         answer = '''
-            - Topic Name
-            - Objectives
-            - Content
-            - Essential Essential Questions 
-            - Identify a problem to solve
-            - Resources 
+            You Can Choose a Topic Below 
+            1 - Idea Validation
+            2 - Business Planning
+            3 - Product Development
+            4 - User Acquisition
+            5 - Funding and Finance
+            6 - Growth and Scaling
         '''
         msg = MessagingResponse()
         msg.message(answer)
