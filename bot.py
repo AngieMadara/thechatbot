@@ -11,6 +11,8 @@ completion = openai.Completion()
 
 start_sequence = "\nBot:"
 restart_sequence = "\n\nPerson:"
+
+
 session_prompt = """
 
 I am athenabot, My name is athenabot.
@@ -265,12 +267,20 @@ Choose a topic or go back home
 
 \n\nPerson:"""
 
+history_prompt = [
+  {"role": "system", "content" : "You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible.\nKnowledge cutoff: 2021-09-01\nCurrent date: 2023-03-02"},
+  {"role": "user", "content" : "How are you?"},
+  {"role": "assistant", "content" : "I am doing well, OROR"},
+  {"role": "user", "content" : "What is the mission of the company OpenAI?"}
+]
+
 def ask(question, chat_log=None):
     prompt_text = f'{chat_log}{restart_sequence}: {question}{start_sequence}:'
     response = openai.Completion.create(
       engine="gpt-3.5-turbo",
     #   model="text-davinci-003",
-      prompt=prompt_text,
+      # prompt=prompt_text,
+      messages = history_prmopt
       temperature=0.7,
       max_tokens=150,
       top_p=1,
@@ -278,7 +288,7 @@ def ask(question, chat_log=None):
       presence_penalty=0.3,
       stop=["\n"],
     )
-    story = response['choices'][0]['text']
+    story = response['choices'][0]['messages']['content']
     return str(story)
 
 def append_interaction_to_chat_log(question, answer, chat_log=None):
