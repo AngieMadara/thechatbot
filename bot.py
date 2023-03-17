@@ -278,7 +278,10 @@ def ask(question, chat_log=None):
     prompt_text = f'{chat_log}{restart_sequence}: {question}{start_sequence}:'
     response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
-            messages=history_prompt
+            messages=history_prompt,
+             temperature=0.8,
+            max_tokens=800,
+            top_p=1,
             )
     story = response['choices'][0]['message']['content']
     return str(story)
