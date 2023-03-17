@@ -67,7 +67,7 @@ def bot():
     
     if "topic sequence" == incoming_msg.lower() or "what is topic sequence" == incoming_msg.lower():
         answer = '''
-            - Topic Name \n
+            - Topic Sequences \n
             - Objectives \n
             - Content \n
             - Essential Essential Questions \n
@@ -84,12 +84,12 @@ def bot():
     if "1" == incoming_msg.lower() or "Option 1" in incoming_msg.lower():
         answer = '''
             You Can Choose a Topic Below 
-            1 - Idea Validation
-            2 - Business Planning
-            3 - Product Development
-            4 - User Acquisition
-            5 - Funding and Finance
-            6 - Growth and Scaling
+            Topic 1 - Idea Validation
+            Topic 2 - Business Planning
+            Topic 3 - Product Development
+            Topic 4 - User Acquisition
+            Topic 5 - Funding and Finance
+            Topic 6 - Growth and Scaling
         '''
         msg = MessagingResponse()
         msg.message(answer)
