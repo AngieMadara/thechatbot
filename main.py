@@ -6,10 +6,12 @@ app = Flask(__name__)
 # if for some reason your conversation with the bot gets weird, change the secret key 
 app.config['SECRET_KEY'] = '8wLs1T3BlbkFJUJ5BxAcvjbvkjgffvrOjUcAMX7njo78'
 
+
+
 @app.route('/bot', methods=['POST'])
 def bot():
     incoming_msg = request.values['Body']
-    print(incoming_msg)
+    
     chat_log = session.get('chat_log')
     answer = ask(incoming_msg, chat_log)
     session['chat_log'] = append_interaction_to_chat_log(incoming_msg, answer,

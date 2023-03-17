@@ -268,7 +268,7 @@ Choose a topic or go back home
 def ask(question, chat_log=None):
     prompt_text = f'{chat_log}{restart_sequence}: {question}{start_sequence}:'
     response = openai.Completion.create(
-      engine="text-davinci-003",
+      engine="gpt-3.5-turbo",
     #   model="text-davinci-003",
       prompt=prompt_text,
       temperature=0.7,
