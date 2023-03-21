@@ -2,6 +2,16 @@ from flask import Flask, request, session, Response
 from twilio.twiml.messaging_response import MessagingResponse
 # from bot import ask, append_interaction_to_chat_log
 
+from dotenv import load_dotenv
+from random import choice
+import os
+import openai
+
+load_dotenv()
+openai.api_key = os.getenv("OPENAI_API_KEY")
+# openai.api_key = "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"
+completion = openai.Completion()
+
 # app = Flask(__name__)
 # # if for some reason your conversation with the bot gets weird, change the secret key 
 # app.config['SECRET_KEY'] = '8wLs1T3BlbkFJUJ5BxAcvjbvkjgffvrOjUcAMX7njo78'
@@ -200,9 +210,22 @@ menu_options = {
     }
 }
 
+start_sequence = "\nBot:"
+restart_sequence = "\n\nPerson:"
+session_prompt = """
+I am athenabot, My name is athenabot.
+__
+
+Our Purpose, Who are we = "Building a technology startup can be an exciting and rewarding journey. 
+As a woman looking to convert your business idea into a technology business, 
+it's essential to have a clear roadmap to guide you along the way. 
+Here's our guide to help you build a technology startup 🏗️💻🚀"
+
+"""
+
 @app.route("/bot", methods=['POST'])
 def bot():
-    incoming_msg = request.values.get('Body', '').lower()
+    incoming_msg = request.values['Body'].lower()
     resp = MessagingResponse()
     
     if 'menu' in incoming_msg or 'main menu' in incoming_msg:
@@ -260,12 +283,24 @@ def bot():
             session['current_section'] = current_section + 1
             return str(message)
     else:
+        prompt_text = f'{session_prompt}{restart_sequence}: {incoming_msg}{start_sequence}:'
+        
+        response = openai.Completion.create(
+            engine="text-davinci-003",
+            # model="text-davinci-003",
+            prompt=prompt_text,
+            temperature=0.7,
+            max_tokens=60,
+            top_p=1,
+            frequency_penalty=0,
+            presence_penalty=0.3,
+            stop=["\n"],
+        )
         message = resp.message()
-        message.body('Sorry, I did not understand your message. Please try again.')
+        message.body(response['choices'][0]['text'])
+    
         return str(message)
-    return str(resp)
-
-
+    
 
 if __name__ == '__main__':
     app.run(debug=True)
