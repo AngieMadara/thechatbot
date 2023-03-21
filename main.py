@@ -223,9 +223,17 @@ def bot():
         # Show topics for Learn
         resp = MessagingResponse()
         
-        resp.message('Choose a topic to learn about:')
-        for i, topic in enumerate(menu_options['1']['topics']):
-            resp.message(f'{i+1}. {topic["name"]}')
+        resp.message('''
+            You Can Choose a Topic Below 
+#             Topic 1 - Idea Validation
+#             Topic 2 - Business Planning
+#             Topic 3 - Product Development
+#             Topic 4 - User Acquisition
+#             Topic 5 - Funding and Finance
+#             Topic 6 - Growth and Scaling             
+        ''')
+        # for i, topic in enumerate(menu_options['1']['topics']):
+        #     resp.message(f'{i+1}. {topic["name"]}')
         session['current_topic'] = None
         return str(resp)
         
