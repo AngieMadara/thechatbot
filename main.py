@@ -118,7 +118,6 @@ completion = openai.Completion()
 # if __name__ == '__main__':
 #     app.run(debug=True)
 
-from flask import Flask, request
 import requests
 import json
 
@@ -191,10 +190,11 @@ Here's our guide to help you build a technology startup 🏗️💻🚀"
 @app.route("/bot", methods=['POST'])
 def bot():
     incoming_msg = request.values['Body'].lower()
-    resp = MessagingResponse()
     
     if 'menu' in incoming_msg or 'main menu' in incoming_msg:
         # Show menu options
+        resp = MessagingResponse()
+        
         message = resp.message()
         message.body('Main Menu:\n1 - Learn\n2 - Ask a Question')
     
@@ -203,6 +203,8 @@ def bot():
         
     elif incoming_msg == '1':
         # Show topics for Learn
+        resp = MessagingResponse()
+        
         message = resp.message()
         message.body('Choose a topic to learn about:')
         for i, topic in enumerate(menu_options['1']['topics']):
@@ -213,6 +215,8 @@ def bot():
         
     elif incoming_msg in ['1.1', '1.2', '1.3', '1.4', '1.5', '1.6']:
         # Show topic content
+        resp = MessagingResponse()
+        
         topic_num = int(incoming_msg.split('.')[1]) - 1
         topic = menu_options['1']['topics'][topic_num]
         message = resp.message()
@@ -226,6 +230,8 @@ def bot():
         
         
     elif incoming_msg == 'continue':
+        resp = MessagingResponse()
+        
         # Show next section
         message = resp.message()
         if 'current_topic' not in session:
@@ -249,6 +255,7 @@ def bot():
             return str(message)
     else:
         prompt_text = f'{session_prompt}{restart_sequence}: {incoming_msg}{start_sequence}:'
+        resp = MessagingResponse()
         
         response = openai.Completion.create(
             engine="text-davinci-003",
