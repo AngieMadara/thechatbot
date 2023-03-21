@@ -132,9 +132,28 @@ menu_options = {
         'topics': [
             {
                 'name': 'Idea Validation',
-                'objectives': 'To learn how to validate a business idea by engaging with potential customers. 📈👥💭',
-                'content': 'Identify a problem to solve: Start by identifying a problem that you are passionate about solving. Identify your target audience and their needs: Determine who your target customers are, what their pain points are, and how your product or service can solve their problems.',
-                'resources': 'Read "The Mom Test" by Rob Fitzpatrick to learn how to effectively validate your business idea. 📖💡🤔\nWatch "How to Validate Your Startup Idea" by Y Combinator on YouTube - https://www.youtube.com/watch?v=CGlGp-B6oM8 📹💻👀'
+                'objectives': 
+                    """ 
+                        Objectives: \n
+                        To learn how to validate a business idea by engaging with potential customers. 📈👥💭 \n
+                        To identify a viable market and determine if there is a demand for the proposed product or service. 🌍🔍💰 \n
+                        To identify potential challenges or obstacles to success and develop strategies for addressing them. 🤔👷📝 \n
+                    """,
+                'Essential Questions': ''' Essential Questions: \n What are the most effective questions to ask potential customers when validating a business idea? 🤔💭👥 \n
+                How can you determine if a potential customer's feedback is valuable in the idea validation process? 🕵️‍♀️🔍💡 \n
+                What are some common mistakes that entrepreneurs make when validating their business ideas? 💼💥🚫 \n
+                ''',
+                'content': '''
+                    Content: \n
+                    Introduction: Start by brainstorming your business idea and mapping out a clear plan of action. Conduct research to validate your idea and ensure that there's a market for it. 💡🧠
+                    Identify a problem to solve: Start by identifying a problem that you are passionate about solving. Look for gaps in the market or challenges that you have personally experienced. Sample tool: Gap analysis template from Smartsheet (https://www.smartsheet.com/gap-analysis-template) 🔍💡👥💪
+                    Identify your target audience and their needs: Determine who your target customers are, what their pain points are, and how your product or service can solve their problems. How to Validate Your Business Idea: https://www.entrepreneur.com/article/297899 🎯👥💡🔑
+                    Research the market: Once you have identified a problem and target audience, research the market to determine if there is a demand for a solution. Use tools like Google Trends, industry reports, and customer surveys to gather data. Sample tool: Guide to Market Research: https://www.inc.com/guides/2010/06/conducting-market-research.html SurveyMonkey for creating surveys to collect market data (https://www.surveymonkey.com/) 📈🌍📊📝
+                    Refine your idea: Based on your research, refine your idea and determine the unique value proposition that your product or service offers. Think about what sets you apart from competitors and write it down. 💡🔎✍️💎
+
+                ''',
+                'resources': 'Resources \n Read "The Mom Test" by Rob Fitzpatrick to learn how to effectively validate your business idea. 📖💡🤔\nWatch "How to Validate Your Startup Idea" by Y Combinator on YouTube - https://www.youtube.com/watch?v=CGlGp-B6oM8 📹💻👀',
+                'Assignment': ''' Assignment \n Conduct customer interviews to gather feedback on your business idea. Develop a list of potential customers and interview them to gather information about their pain points, needs, and preferences. 🗣️💬👥📝 '''
             },
             {
                 'name': 'Topic 2',
@@ -218,8 +237,8 @@ def bot():
         topic_num = int(incoming_msg.split('.')[1]) - 1
         topic = menu_options['1']['topics'][topic_num]
         
-        resp.message(f'{topic["name"]}:\n{topic["objectives"]}\n\n{topic["content"]}\n\nResources:\n{topic["resources"]}')
-    
+        # resp.message(f'{topic["name"]}:\n{topic["objectives"]}\n\n{topic["content"]}\n\nResources:\n{topic["resources"]}')
+        resp.message(f'{topic["name"]}:\n')
         resp.message('Say "continue" to see the next section.')
         
         session['current_topic'] = topic_num
@@ -239,7 +258,7 @@ def bot():
         current_topic = session['current_topic']
         current_section = session.get('current_section', 0)
         topic = menu_options['1']['topics'][current_topic]
-        sections = [topic['objectives'], topic['content'], topic['resources']]
+        sections = [topic['objectives'], topic['Essential Questions'], topic['content'], topic['resources'], topic['Assignment']]
         if current_section == len(sections):
             # If all sections have been shown, reset session and return to topic selection
             session.pop('current_topic', None)
