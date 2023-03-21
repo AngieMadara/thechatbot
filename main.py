@@ -225,12 +225,12 @@ def bot():
         
         resp.message('''
             You Can Choose a Topic Below 
-#             Topic 1 - Idea Validation
-#             Topic 2 - Business Planning
-#             Topic 3 - Product Development
-#             Topic 4 - User Acquisition
-#             Topic 5 - Funding and Finance
-#             Topic 6 - Growth and Scaling             
+            1. Idea Validation
+            2. Business Planning
+            3. Product Development
+            4. User Acquisition
+            5. Funding and Finance
+            6. Growth and Scaling             
         ''')
         # for i, topic in enumerate(menu_options['1']['topics']):
         #     resp.message(f'{i+1}. {topic["name"]}')
