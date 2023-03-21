@@ -12,41 +12,6 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 # openai.api_key = "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"
 completion = openai.Completion()
 
-# app = Flask(__name__)
-# # if for some reason your conversation with the bot gets weird, change the secret key 
-# app.config['SECRET_KEY'] = '8wLs1T3BlbkFJUJ5BxAcvjbvkjgffvrOjUcAMX7njo78'
-
-
-import sqlite3
-import threading
-
-# Create a thread-local storage object to store the connection
-# object for each thread
-local = threading.local()
-
-# Connect to the database
-def get_connection():
-    if not hasattr(local, 'connection'):
-        local.connection = sqlite3.connect('chatbot.db')
-        local.connection.execute('CREATE TABLE IF NOT EXISTS messages (sid TEXT, body TEXT)')
-    return local.connection
-
-# Insert a new message into the table
-def insert_message(sid, body):
-    conn = get_connection()
-    conn.execute('INSERT INTO messages (sid, body) VALUES (?, ?)', (sid, body))
-    conn.commit()
-
-# Get the last message's body from the table
-def get_last_message_body():
-    conn = get_connection()
-    cursor = conn.execute('SELECT body FROM messages ORDER BY ROWID DESC LIMIT 1')
-    row = cursor.fetchone()
-    if row is not None:
-        return row[0]
-    else:
-        return ''
-
 
 
 # @app.route('/bot', methods=['POST'])
