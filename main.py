@@ -1,10 +1,41 @@
 from flask import Flask, request, session, Response
 from twilio.twiml.messaging_response import MessagingResponse
-from bot import ask, append_interaction_to_chat_log
+# from bot import ask, append_interaction_to_chat_log
 
-app = Flask(__name__)
-# if for some reason your conversation with the bot gets weird, change the secret key 
-app.config['SECRET_KEY'] = '8wLs1T3BlbkFJUJ5BxAcvjbvkjgffvrOjUcAMX7njo78'
+# app = Flask(__name__)
+# # if for some reason your conversation with the bot gets weird, change the secret key 
+# app.config['SECRET_KEY'] = '8wLs1T3BlbkFJUJ5BxAcvjbvkjgffvrOjUcAMX7njo78'
+
+
+import sqlite3
+import threading
+
+# Create a thread-local storage object to store the connection
+# object for each thread
+local = threading.local()
+
+# Connect to the database
+def get_connection():
+    if not hasattr(local, 'connection'):
+        local.connection = sqlite3.connect('chatbot.db')
+        local.connection.execute('CREATE TABLE IF NOT EXISTS messages (sid TEXT, body TEXT)')
+    return local.connection
+
+# Insert a new message into the table
+def insert_message(sid, body):
+    conn = get_connection()
+    conn.execute('INSERT INTO messages (sid, body) VALUES (?, ?)', (sid, body))
+    conn.commit()
+
+# Get the last message's body from the table
+def get_last_message_body():
+    conn = get_connection()
+    cursor = conn.execute('SELECT body FROM messages ORDER BY ROWID DESC LIMIT 1')
+    row = cursor.fetchone()
+    if row is not None:
+        return row[0]
+    else:
+        return ''
 
 
 
@@ -118,6 +149,9 @@ import json
 
 app = Flask(__name__)
 
+app.config['SECRET_KEY'] = '8wLs1T3BlbkFJUJ5BxAcvjbvkjgffvrOjUcAMX7njo78'
+
+
 menu_options = {
     '1': {
         'name': 'Learn',
@@ -170,56 +204,68 @@ menu_options = {
 def bot():
     incoming_msg = request.values.get('Body', '').lower()
     resp = MessagingResponse()
+    
     if 'menu' in incoming_msg or 'main menu' in incoming_msg:
         # Show menu options
         message = resp.message()
         message.body('Main Menu:\n1 - Learn\n2 - Ask a Question')
+    
+    
+        return str(message)
+        
     elif incoming_msg == '1':
         # Show topics for Learn
         message = resp.message()
         message.body('Choose a topic to learn about:')
         for i, topic in enumerate(menu_options['1']['topics']):
             message.body(f'{i+1}. {topic["name"]}')
+        session['current_topic'] = None
+        return str(message)
+        
+        
     elif incoming_msg in ['1.1', '1.2', '1.3', '1.4', '1.5', '1.6']:
         # Show topic content
         topic_num = int(incoming_msg.split('.')[1]) - 1
         topic = menu_options['1']['topics'][topic_num]
         message = resp.message()
-        message.body(f'{topic["name"]}:\n{topic["objectives"]}\n\n{topic["content"]}')
-        resp.redirect('/continue')
-    elif incoming_msg == 'continue':
-        # Show next section of topic
-        last_msg = request.values.get('LastMessageSid')
-        last_msg_body = Message(last_msg).body.lower()
-        if '/continue' in last_msg_body:
-            topic_num = int(last_msg_body.split('.')[1]) - 1
-            topic = menu_options['1']['topics'][topic_num]
-            content_sections = topic["content"].split('\n\n')
-            next_section_index = last_msg_body.count('/continue')
-            if next_section_index < len(content_sections):
-                message = resp.message()
-                message.body(content_sections[next_section_index])
-                resp.redirect(f'/continue/{topic_num+1}/{next_section_index+1}')
-            else:
-                message = resp.message()
-                message.body('You have reached the end of the content for this topic.')
-        else:
-            message = resp.message()
-            message.body('Sorry, I did not understand that.')
-    elif '/continue' in incoming_msg:
-        # Handle continue redirects
-        _, topic_num, section_num = incoming_msg.split('/')
-        topic_num = int(topic_num) - 1
-        section_num = int(section_num) - 1
-        topic = menu_options['1']['topics'][topic_num]
-        content_sections = topic["content"].split('\n\n')
+        message.body(f'{topic["name"]}:\n{topic["objectives"]}\n\n{topic["content"]}\n\nResources:\n{topic["resources"]}')
         message = resp.message()
-        message.body(content_sections[section_num])
-        resp.redirect(f'/continue/{topic_num+1}/{section_num+1}')
+        message.body('Say "continue" to see the next section.')
+        message.media('https://media.giphy.com/media/26xBwdIuRJiAIqHwA/giphy.gif')
+        session['current_topic'] = topic_num
+        session['current_section'] = 0
+        return str(message)
+        
+        
+    elif incoming_msg == 'continue':
+        # Show next section
+        message = resp.message()
+        if 'current_topic' not in session:
+            message.body('Please choose a topic first.')
+            return str(message)
+
+        current_topic = session['current_topic']
+        current_section = session.get('current_section', 0)
+        topic = menu_options['1']['topics'][current_topic]
+        sections = [topic['objectives'], topic['content'], topic['resources']]
+        if current_section == len(sections):
+            # If all sections have been shown, reset session and return to topic selection
+            session.pop('current_topic', None)
+            session.pop('current_section', None)
+            message.body('You have reached the end of this topic. Please choose another topic to learn about.')
+            return str(message)
+        else:
+            # Show the next section
+            message.body(sections[current_section])
+            session['current_section'] = current_section + 1
+            return str(message)
     else:
         message = resp.message()
-        message.body('Sorry, I did not understand that.')
+        message.body('Sorry, I did not understand your message. Please try again.')
+        return str(message)
     return str(resp)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
