@@ -214,7 +214,7 @@ def bot():
         # Show menu options
         resp = MessagingResponse()
         
-        resp.message('Main Menu:\n1 - Learn\n2 - Ask a Question')
+        resp.message('''Welcome, Athenabot is here to help 1 million women entrepreneurs start and grow their technology businesses! Whether you're just starting out or looking to take your business to the next level, we've got you covered \n 1: Learn 📚 \n 2: Ask a question 🙋🏻‍♀️''')
     
     
         return str(resp)
