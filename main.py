@@ -195,22 +195,20 @@ def bot():
         # Show menu options
         resp = MessagingResponse()
         
-        message = resp.message()
-        message.body('Main Menu:\n1 - Learn\n2 - Ask a Question')
+        resp.message('Main Menu:\n1 - Learn\n2 - Ask a Question')
     
     
-        return str(message)
+        return str(resp)
         
     elif incoming_msg == '1':
         # Show topics for Learn
         resp = MessagingResponse()
         
-        message = resp.message()
-        message.body('Choose a topic to learn about:')
+        resp.message('Choose a topic to learn about:')
         for i, topic in enumerate(menu_options['1']['topics']):
-            message.body(f'{i+1}. {topic["name"]}')
+            resp.message(f'{i+1}. {topic["name"]}')
         session['current_topic'] = None
-        return str(message)
+        return str(resp)
         
         
     elif incoming_msg in ['1.1', '1.2', '1.3', '1.4', '1.5', '1.6']:
@@ -219,24 +217,24 @@ def bot():
         
         topic_num = int(incoming_msg.split('.')[1]) - 1
         topic = menu_options['1']['topics'][topic_num]
-        message = resp.message()
-        message.body(f'{topic["name"]}:\n{topic["objectives"]}\n\n{topic["content"]}\n\nResources:\n{topic["resources"]}')
-        message = resp.message()
-        message.body('Say "continue" to see the next section.')
-        message.media('https://media.giphy.com/media/26xBwdIuRJiAIqHwA/giphy.gif')
+        
+        resp.message(f'{topic["name"]}:\n{topic["objectives"]}\n\n{topic["content"]}\n\nResources:\n{topic["resources"]}')
+    
+        resp.message('Say "continue" to see the next section.')
+        
         session['current_topic'] = topic_num
         session['current_section'] = 0
-        return str(message)
+        return str(resp)
         
         
     elif incoming_msg == 'continue':
         resp = MessagingResponse()
         
         # Show next section
-        message = resp.message()
+        
         if 'current_topic' not in session:
-            message.body('Please choose a topic first.')
-            return str(message)
+            resp.message('Please choose a topic first.')
+            return str(resp)
 
         current_topic = session['current_topic']
         current_section = session.get('current_section', 0)
@@ -246,13 +244,13 @@ def bot():
             # If all sections have been shown, reset session and return to topic selection
             session.pop('current_topic', None)
             session.pop('current_section', None)
-            message.body('You have reached the end of this topic. Please choose another topic to learn about.')
-            return str(message)
+            resp.message('You have reached the end of this topic. Please choose another topic to learn about.')
+            return str(resp)
         else:
             # Show the next section
-            message.body(sections[current_section])
+            resp.message(sections[current_section])
             session['current_section'] = current_section + 1
-            return str(message)
+            return str(resp)
     else:
         prompt_text = f'{session_prompt}{restart_sequence}: {incoming_msg}{start_sequence}:'
         resp = MessagingResponse()
@@ -268,10 +266,10 @@ def bot():
             presence_penalty=0.3,
             stop=["\n"],
         )
-        message = resp.message()
-        message.body(response['choices'][0]['text'])
-    
-        return str(message)
+        
+        resp.message(response['choices'][0]['text'])
+
+        return str(resp)
     
 
 if __name__ == '__main__':
