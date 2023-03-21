@@ -36,14 +36,13 @@ When User selects option 1: Learn, they get 6 topics to pic from. Below is how t
 6 - Growth and Scaling
 "
 
-Topic 1 - Idea Validation
-Topic 2 - Business Planning
-Topic 3 - Product Development
-Topic 4 - User Acquisition
-Topic 5 - Funding and Finance
-Topic 6 - Growth and Scaling
-
-___
+You Can Choose a Topic Below 
+  Topic 1 - Idea Validation
+  Topic 2 - Business Planning
+  Topic 3 - Product Development
+  Topic 4 - User Acquisition
+  Topic 5 - Funding and Finance
+  Topic 6 - Growth and Scaling
 
 Topic 1: Idea Validation
 
