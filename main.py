@@ -615,7 +615,7 @@ def bot():
         resp = MessagingResponse()
         
         resp.message('''
-            You Can Choose a Topic Below \n 1. Idea Validation \n 2. Business Planning \n 3. Product Development \n 4. User Acquisition \n 5. Funding and Finance \n 6. Growth and Scaling             
+            You Can Choose a Topic Below \n 1.1 Idea Validation \n 1.2 Business Planning \n 1.3 Product Development \n 1.4 User Acquisition \n 1.5 Funding and Finance \n 1.6 Growth and Scaling             
         ''')
         # for i, topic in enumerate(menu_options['1']['topics']):
         #     resp.message(f'{i+1}. {topic["name"]}')
