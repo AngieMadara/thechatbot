@@ -601,7 +601,7 @@ The first step to growing and scaling your business is to evaluate its potential
 def bot():
     incoming_msg = request.values['Body'].lower()
     
-    if 'menu' in incoming_msg or 'main menu' in incoming_msg:
+    if 'menu' in incoming_msg or 'main menu' in incoming_msg or incoming_msg == "hi" or incoming_msg == "hello":
         # Show menu options
         resp = MessagingResponse()
         
