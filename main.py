@@ -5,7 +5,7 @@ from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 # if for some reason your conversation with the bot gets weird, change the secret key 
-app.config['SECRET_KEY'] = '8wLs1T3BlbkFJUJ5BxAcvjbvkjgffvrOjUcAMX7njo7vjvhj8nmb'
+app.config['SECRET_KEY'] = 'nd23hc823hc0923h3j2nc0393d2d23'
 
 @app.route('/bot', methods=['POST'])
 def bot():
@@ -16,6 +16,12 @@ def bot():
     msg.message(answer)
    
     return str(msg)
+
+@app.route('/test', methods=['POST'])
+def test():
+    incoming_msg = request.values['Body']
+   
+    return incoming_msg
 
 if __name__ == '__main__':
     app.run(debug=True)
