@@ -3,7 +3,7 @@ from flask import Flask, request
 
 app = Flask(__name__)
 # if for some reason your conversation with the bot gets weird, change the secret key 
-app.config['SECRET_KEY'] = 'nd23hc823hcbhjgug7g8g89bkh70923h3j2nc0393d2d23'
+app.config['SECRET_KEY'] = 'nd23hc823hdcdcdcbhjgug7g8g89bkh70923h3j2nc0393d2d23'
 
 @app.route('/bot', methods=['POST'])
 def bot():
