@@ -91,13 +91,3 @@ def chatbotHandler(message):
     updated_text = text.replace("Answer", "", 1)
     return updated_text
 
-while True:
-    query = input(f"Prompt: ")
-    if query == "exit" or query == "quit" or query == "q" or query == "f":
-        print('Exiting')
-        sys.exit()
-    if query == '':
-        continue
-    result = chatbotHandler(query)
-    print(f"Answer: " + result)
-
