@@ -31,3 +31,4 @@ Werkzeug==2.2.2
 langchain
 colorama==0.4.6
 pypdf
+chromadb
