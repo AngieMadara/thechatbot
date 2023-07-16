@@ -38,10 +38,10 @@ vectordb.persist()
 memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
 # llm = ConversationalRetrievalChain.from_llm(OpenAI(temperature=0.8) , vectordb.as_retriever(), memory=memory)
 llm = ChatOpenAI(
-    model_name="gpt-3.5-turbo-16k",
+    model_name="gpt-3.5-turbo",
     temperature=0,
     openai_api_key=OPENAI_API_KEY,
-    max_tokens=4097,
+    max_tokens=512,
 )
 prompt_template = """
 
